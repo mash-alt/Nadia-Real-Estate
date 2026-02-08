@@ -1,0 +1,83 @@
+import { useState } from 'react';
+
+export default function FloatingContact() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
+
+  const handleContactClick = (method: string) => {
+    switch(method) {
+      case 'phone':
+        window.location.href = 'tel:+639224956965';
+        break;
+      case 'email':
+        window.location.href = 'mailto:realtornadiac@gmail.com';
+        break;
+      case 'messenger':
+        window.open('https://www.facebook.com/messages/t/100073887523966', '_blank');
+        break;
+      case 'viber':
+        window.location.href = 'viber://chat?number=+639224956965';
+        break;
+    }
+  };
+
+  const toggleMenu = () => {
+    setIsPinned(!isPinned);
+    setIsExpanded(!isPinned);
+  };
+
+  const handleMouseEnter = () => {
+    if (!isPinned) setIsExpanded(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (!isPinned) setIsExpanded(false);
+  };
+
+  return (
+    <div 
+      className="floating-contact"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className={`contact-menu ${isExpanded ? 'expanded' : ''}`}>
+        <button 
+          className="contact-btn phone" 
+          onClick={() => handleContactClick('phone')}
+          title="Call Now"
+        >
+          <i className="fas fa-phone-alt"></i>
+        </button>
+        <button 
+          className="contact-btn email" 
+          onClick={() => handleContactClick('email')}
+          title="Email"
+        >
+          <i className="fas fa-envelope"></i>
+        </button>
+        <button 
+          className="contact-btn messenger" 
+          onClick={() => handleContactClick('messenger')}
+          title="Messenger"
+        >
+          <i className="fab fa-facebook-messenger"></i>
+        </button>
+        <button 
+          className="contact-btn viber" 
+          onClick={() => handleContactClick('viber')}
+          title="Viber"
+        >
+          <i className="fab fa-viber"></i>
+        </button>
+      </div>
+      
+      <button 
+        className="contact-btn main-btn" 
+        onClick={toggleMenu}
+        title="Contact Me"
+      >
+        <i className="fas fa-comments"></i>
+      </button>
+    </div>
+  );
+}

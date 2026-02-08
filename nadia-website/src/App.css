@@ -1,0 +1,830 @@
+/* ===== APP CONTAINER ===== */
+.app {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ===== NAVIGATION ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.5rem 2rem;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.navbar.scrolled,
+.navbar.solid {
+  background: rgba(26, 35, 50, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: 3px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 3rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  color: var(--white);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links li::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.nav-links li:hover {
+  color: var(--gold);
+}
+
+.nav-links li:hover::after {
+  width: 100%;
+}
+
+/* ===== FLOATING CONTACT BUTTONS ===== */
+.floating-contact {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.contact-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.contact-menu.expanded {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.contact-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+}
+
+.contact-btn.main-btn {
+  background: linear-gradient(135deg, var(--gold) 0%, #d4a056 100%);
+}
+
+.contact-btn.phone {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.contact-btn.email {
+  background: linear-gradient(135deg, #EA4335 0%, #D33B2C 100%);
+}
+
+.contact-btn.messenger {
+  background: linear-gradient(135deg, #0084FF 0%, #0066CC 100%);
+}
+
+.contact-btn.viber {
+  background: linear-gradient(135deg, #7360F2 0%, #5B4ACF 100%);
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--charcoal) 100%);
+  background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.85) 0%, rgba(45, 55, 72, 0.75) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--white);
+  max-width: 900px;
+  padding: 2rem;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 1.4rem;
+  margin-bottom: 3rem;
+  color: var(--beige);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.btn-primary:hover {
+  background: #b89850;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(201, 169, 97, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--white);
+}
+
+.btn-secondary:hover {
+  background: var(--white);
+  color: var(--navy);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.btn-outline:hover {
+  background: var(--gold);
+  color: var(--white);
+}
+
+.btn-full {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+}
+
+/* ===== SECTIONS ===== */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: 4rem;
+  font-weight: 300;
+}
+
+/* ===== CONDOS SECTION ===== */
+.condos-section {
+  padding: 8rem 0;
+  background: var(--beige);
+}
+
+.condos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.condo-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.condo-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.condo-image {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.condo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.condo-card:hover .condo-image img {
+  transform: scale(1.1);
+}
+
+.condo-price {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--gold);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.condo-content {
+  padding: 2rem;
+}
+
+.condo-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--navy);
+}
+
+.condo-location {
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.condo-details {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.condo-details span {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-section {
+  padding: 8rem 0;
+  background: #f5f5f5;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.about-image img {
+  border-radius: 16px;
+  width: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-content .section-title {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 2rem;
+  background: var(--beige);
+  border-radius: 12px;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ===== TESTIMONIALS SECTION ===== */
+.testimonials-section {
+  padding: 8rem 0;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.testimonials-section .section-title {
+  color: var(--white);
+}
+
+.testimonials-section .section-subtitle {
+  color: var(--beige);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.testimonial-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+}
+
+.stars {
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.testimonial-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  color: var(--beige);
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.testimonial-author strong {
+  color: var(--white);
+  font-size: 1.1rem;
+}
+
+.testimonial-author span {
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+  padding: 8rem 0;
+  background: var(--beige);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  margin-top: 4rem;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.contact-item {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.contact-icon {
+  font-size: 2.5rem;
+  width: 70px;
+  height: 70px;
+  background: var(--white);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.contact-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--navy);
+}
+
+.contact-item p {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+.contact-form {
+  background: var(--white);
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--navy);
+  color: var(--white);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.footer p {
+  color: var(--beige);
+  margin: 0.5rem 0;
+}
+
+.footer-tagline {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .about-image {
+    order: -1;
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  
+  .floating-contact {
+    right: 1rem;
+    bottom: 1rem;
+  }
+  
+  .contact-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+  }
+  
+  .condos-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-form {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 1rem;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .condos-section,
+  .about-section,
+  .testimonials-section,
+  .contact-section {
+    padding: 4rem 0;
+  }
+}
+
+/* ===== ROUTER SPECIFIC STYLES ===== */
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-links li.active {
+  color: var(--gold);
+}
+
+.nav-links li.active::after {
+  width: 100%;
+}
+
+.logo {
+  text-decoration: none;
+  color: var(--white);
+}
+
+/* ===== PROPERTY FILTERS ===== */
+.property-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0 3rem;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--navy);
+  background: transparent;
+  color: var(--navy);
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.filter-btn:hover {
+  background: var(--navy);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+
+.no-results {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--navy);
+}
+
+.no-results p {
+  font-size: 1.2rem;
+}
+
+/* ===== STATS SECTION ===== */
+.stats-section {
+  padding: 4rem 0;
+  background: var(--light-bg);
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--dark-navy) 100%);
+  color: var(--white);
+  text-align: center;
+}
+
+.cta-section .section-title {
+  color: var(--white);
+}
+
+.cta-section .section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== ABOUT SPECIALTIES ===== */
+.about-specialties {
+  margin-top: 2rem;
+}
+
+.about-specialties h3 {
+  color: var(--navy);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.about-specialties ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.about-specialties li {
+  color: var(--text-dark);
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+
+/* ===== SCROLL FADE-IN ANIMATIONS ===== */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-section.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .property-filters {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .filter-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .about-specialties ul {
+    grid-template-columns: 1fr;
+  }
+}
