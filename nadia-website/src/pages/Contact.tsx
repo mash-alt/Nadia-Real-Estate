@@ -3,7 +3,7 @@ export default function Contact() {
     <section className="contact-section">
       <div className="container">
         <h2 className="section-title">Let's Find Your Dream Home</h2>
-        <p className="section-subtitle">Reach out today and start your journey to finding the perfect property</p>
+        <p className="section-subtitle">Reach out to Nadia today and start your journey to finding the perfect property</p>
         
         <div className="contact-grid">
           <div className="contact-info">

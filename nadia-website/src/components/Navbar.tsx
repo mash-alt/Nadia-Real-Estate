@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${!isHomePage ? 'solid' : ''}`}>
       <div className="nav-container">
-        <Link to="/" className="logo">NADIA ALFANTE CAGAY</Link>
+        <Link to="/" className="logo">NADIA</Link>
         <ul className="nav-links">
           <li className={isActive('/') ? 'active' : ''}>
             <Link to="/">Home</Link>

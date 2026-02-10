@@ -70,7 +70,7 @@ export default function Home() {
         <div className="container">
           <div className="about-grid">
             <div className="about-image">
-              <img src="https://via.placeholder.com/600x800/1a2332/ffffff?text=[Agent+Photo]" alt="Nadia Alfante Cagay - Real Estate Agent" />
+              <img src="https://via.placeholder.com/600x800/1a2332/ffffff?text=[Agent+Photo]" alt="Nadia - Real Estate Agent" />
             </div>
             <div className="about-content">
               <h2 className="section-title">Your Real Estate Guide</h2>
@@ -128,7 +128,7 @@ export default function Home() {
       <section className="contact-section fade-in-section">
         <div className="container">
           <h2 className="section-title">Let's Find Your Dream Condo</h2>
-          <p className="section-subtitle">Reach out today and start your journey to urban luxury living</p>
+          <p className="section-subtitle">Reach out to Nadia today and start your journey to urban luxury living</p>
           
           <div className="contact-grid">
             <div className="contact-info">
@@ -136,14 +136,14 @@ export default function Home() {
                 <div className="contact-icon">📞</div>
                 <div>
                   <h3>Call or Text</h3>
-                  <p>[Phone Number]</p>
+                  <p>09224956965</p>
                 </div>
               </div>
               <div className="contact-item">
                 <div className="contact-icon">✉️</div>
                 <div>
                   <h3>Email</h3>
-                  <p>[Email Address]</p>
+                  <p>realtornadiac@gmail.com</p>
                 </div>
               </div>
               <div className="contact-item">
