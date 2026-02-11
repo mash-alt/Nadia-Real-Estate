@@ -32,15 +32,50 @@ export default function Home() {
       <section id="home" className="hero">
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <h1 className="hero-title">Elevate Your Living</h1>
-          <p className="hero-subtitle">Discover Your Perfect Property in the Heart of the City</p>
-          <div className="hero-buttons">
-            <Link to="/condos" className="btn btn-primary">
-              View Condo Listings
-            </Link>
-            <Link to="/properties" className="btn btn-secondary">
-              Browse All Properties
-            </Link>
+          <div className="hero-grid">
+            <div className="hero-left">
+              <h1 className="hero-title">RealEstateMegaphone</h1>
+              <p className="hero-tagline">Clarity before commitment. Confidence before purchase.</p>
+              <p className="hero-kicker">This is real estate explained, not oversold.</p>
+
+              <div className="hero-buttons">
+                <Link to="/contact" className="btn btn-primary">
+                  Start with clarity → Book a Consultation
+                </Link>
+                <Link to="/about" className="btn btn-secondary">
+                  Learn before you buy
+                </Link>
+              </div>
+
+              <p className="hero-disclaimer">
+                Professional real estate services by a licensed broker and appraiser. Legal discussions are for general information
+                only and not a substitute for legal advice.
+              </p>
+            </div>
+
+            <div className="hero-right">
+              <div className="hero-card">
+                <h3 className="hero-card-title">Meet Nadia A. Cagay</h3>
+                <p className="hero-card-text">
+                  I'm <strong>Nadia A. Cagay, REB, REA, LPT</strong>—a licensed real estate broker and appraiser helping buyers and
+                  investors make informed, well-timed property decisions in the Philippines.
+                </p>
+                <p className="hero-card-text">
+                  RealEstateMegaphone exists to amplify what truly matters in real estate—<strong>facts, proper process, and sound
+                  judgment</strong>—so you don't buy based on pressure, hype, or misinformation.
+                </p>
+              </div>
+
+              <div className="hero-card hero-benefits">
+                <h3 className="hero-card-title">What you'll get here</h3>
+                <ul className="hero-benefits-list">
+                  <li>✔ Clear explanations of titles, laws, and ownership</li>
+                  <li>✔ Guidance for OFWs and local buyers</li>
+                  <li>✔ Strategic advice based on timing, not urgency</li>
+                  <li>✔ Ethical brokerage grounded in licenses and experience</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
