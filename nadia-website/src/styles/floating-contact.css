@@ -1,0 +1,67 @@
+/* ===== FLOATING CONTACT BUTTONS ===== */
+.floating-contact {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.contact-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.contact-menu.expanded {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.contact-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+}
+
+.contact-btn.main-btn {
+  background: linear-gradient(135deg, var(--gold) 0%, #d4a056 100%);
+}
+
+.contact-btn.phone {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.contact-btn.email {
+  background: linear-gradient(135deg, #EA4335 0%, #D33B2C 100%);
+}
+
+.contact-btn.messenger {
+  background: linear-gradient(135deg, #0084FF 0%, #0066CC 100%);
+}
+
+.contact-btn.viber {
+  background: linear-gradient(135deg, #7360F2 0%, #5B4ACF 100%);
+}

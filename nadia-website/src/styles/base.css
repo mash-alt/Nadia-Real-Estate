@@ -1,0 +1,28 @@
+/* ===== BASE & APP CONTAINER ===== */
+.app {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ===== SECTIONS ===== */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: 4rem;
+  font-weight: 300;
+}

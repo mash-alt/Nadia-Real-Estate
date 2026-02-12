@@ -1,0 +1,24 @@
+/* ===== MODULAR STYLES IMPORT ===== */
+/* Organized styles for Nadia Real Estate Website */
+
+/* Base & Layout */
+@import './base.css';
+
+/* Components */
+@import './navigation.css';
+@import './buttons.css';
+@import './floating-contact.css';
+@import './hero.css';
+
+/* Sections */
+@import './sections.css';
+
+/* Properties Experience */
+@import './properties.css';
+@import './property-modal.css';
+
+/* Utilities */
+@import './animations.css';
+
+/* Responsive Design */
+@import './responsive.css';

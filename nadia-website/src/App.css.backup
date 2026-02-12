@@ -1085,7 +1085,7 @@
 .property-view-btn,
 .property-inquire-btn {
   width: 100% !important;
-  padding: 0.7 rem 1rem !important;
+  padding: 0.7rem 1rem !important;
   border-radius: 12px !important;
   text-align: center !important;
   display: inline-flex !important;

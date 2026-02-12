@@ -7,8 +7,14 @@ export interface Property {
   beds: number;
   baths: number;
   image: string;
-  type: 'condo' | 'house' | 'townhouse' | 'apartment';
+  type: 'house' | 'condo' | 'apartment' | 'commercial' | 'townhouse';
+  status?: 'for-sale' | 'for-rent';
   featured?: boolean;
+
+  images?: string[];
+  highlights?: string[];
+  amenities?: string[];
+  overview?: string;
 }
 
 export interface Testimonial {
