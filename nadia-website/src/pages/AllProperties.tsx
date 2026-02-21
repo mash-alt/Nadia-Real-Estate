@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import InteractivePropertyCard from '../components/InteractivePropertyCard';
 import PropertyDetailModal from '../components/PropertyDetailModal';
+import SEO from '../components/SEO';
 import { useProperties } from '../hooks/useProperties';
 import type { Property } from '../types';
 
@@ -77,6 +78,13 @@ export default function AllProperties() {
   };
 
   return (
+    <>
+    <SEO
+      title="All Properties — Houses, Condos & Lots in the Philippines"
+      description="Search all available properties for sale and rent in the Philippines — houses, condos, lots, and commercial spaces. Filter by type, location, and status."
+      canonical="/properties"
+      keywords="properties for sale Philippines, houses lots condos Philippines, real estate listings Philippines, property search Philippines"
+    />
     <section className="condos-section properties-section">
       <div className="container">
         <h2 className="section-title">All Properties</h2>
@@ -190,5 +198,6 @@ export default function AllProperties() {
         </AnimatePresence>
       </div>
     </section>
+    </>
   );
 }

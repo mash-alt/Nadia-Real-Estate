@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block admin routes from indexing
+Disallow: /login
+Disallow: /dashboard
+
+Sitemap: https://nadiacagayrealty.web.app/sitemap.xml

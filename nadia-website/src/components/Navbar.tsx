@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const FOR_SALE_ITEMS = [
@@ -21,6 +21,18 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
+  const navRef = useRef<HTMLElement>(null);
+
+  // Close dropdown when clicking anywhere outside the navbar
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 60);
@@ -34,7 +46,7 @@ export default function Navbar() {
     setOpenDropdown(prev => (prev === name ? null : name));
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={navRef}>
       {/* Top bar */}
       <div className="top-bar">
         <div className="top-bar-inner">

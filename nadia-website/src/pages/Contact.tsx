@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import SEO from '../components/SEO';
 
 const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string;
 
@@ -42,6 +43,13 @@ export default function Contact() {
   };
 
   return (
+    <>
+    <SEO
+      title="Contact Nadia — Real Estate Inquiry"
+      description="Send an inquiry to Nadia A. Cagay, Licensed Real Estate Broker in the Philippines. Available via call, email, Messenger, WhatsApp, and Viber."
+      canonical="/contact"
+      keywords="contact real estate broker Philippines, property inquiry Philippines, Nadia Cagay contact"
+    />
     <section className="contact-section">
       <div className="container">
         <h2 className="section-title">Let's Find Your Dream Home</h2>
@@ -134,5 +142,6 @@ export default function Contact() {
         </div>
       </div>
     </section>
+    </>
   );
 }

@@ -1,5 +1,14 @@
-﻿export default function About() {
+﻿import SEO from '../components/SEO';
+
+export default function About() {
   return (
+    <>
+    <SEO
+      title="About Nadia A. Cagay — Licensed Real Estate Broker"
+      description="Meet Nadia Alfante Cagay, Licensed Real Estate Broker (REB), Appraiser (REA), and Professional Teacher (LPT) in the Philippines. 4+ years helping buyers, investors, and OFWs find the right property."
+      canonical="/about"
+      keywords="Nadia Cagay real estate, licensed broker Philippines, real estate appraiser Cebu, REB REA LPT Philippines"
+    />
     <section className="about-section">
       <div className="container">
         <div className="about-grid">
@@ -55,5 +64,6 @@
         </div>
       </div>
     </section>
+    </>
   );
 }

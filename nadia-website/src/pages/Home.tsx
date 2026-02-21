@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { AnimatePresence } from 'framer-motion';
 import PropertyDetailModal from '../components/PropertyDetailModal';
 import { useProperties } from '../hooks/useProperties';
@@ -31,6 +32,12 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        title="Find Your Dream Home in the Philippines"
+        description="Browse condos, houses, and lots for sale or rent across the Philippines with Nadia A. Cagay — Licensed Real Estate Broker, Appraiser & Professional Teacher."
+        canonical="/"
+        keywords="real estate Philippines, condo for sale, house and lot, property Philippines, NadiaCagayRealty"
+      />
       {/* HERO */}
       <section id="home" className="hero">
         <div className="hero-overlay"></div>

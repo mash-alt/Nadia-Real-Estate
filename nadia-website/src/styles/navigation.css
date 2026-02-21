@@ -196,7 +196,6 @@
   transition: transform 0.2s ease;
 }
 
-.has-dropdown:hover .dd-arrow,
 .has-dropdown.dd-open .dd-arrow {
   transform: rotate(180deg);
 }
@@ -204,14 +203,14 @@
 /* Dropdown panel — hidden by default */
 .nav-dropdown-menu {
   position: absolute;
-  top: calc(100% + 16px);
+  top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-6px);
   background: rgba(8, 14, 28, 0.97);
   border: 1px solid rgba(201,169,97,0.2);
   border-radius: 8px;
   min-width: 190px;
-  padding: 0.4rem 0;
+  padding: 0.6rem 0 0.4rem;
   list-style: none;
   margin: 0;
   opacity: 0;
@@ -222,11 +221,11 @@
   box-shadow: 0 12px 40px rgba(0,0,0,0.45);
 }
 
-/* Show on hover (desktop) */
-.has-dropdown:hover .nav-dropdown-menu {
+/* Show only when dd-open class is set (click-based) */
+.has-dropdown.dd-open .nav-dropdown-menu {
   opacity: 1;
   pointer-events: all;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateY(8px);
 }
 
 .nav-dropdown-menu::before {
