@@ -1,9 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import InteractivePropertyCard from '../components/InteractivePropertyCard';
 import PropertyDetailModal from '../components/PropertyDetailModal';
-import { properties } from '../data/properties';
+import { useProperties } from '../hooks/useProperties';
 import type { Property } from '../types';
+
+const LOCATIONS = ['Metro Manila', 'Cebu', 'Davao', 'Laguna', 'Cavite', 'Batangas'];
 
 function parsePriceToNumber(price: string) {
   const numeric = price.replace(/[^0-9]/g, '');
@@ -12,13 +15,24 @@ function parsePriceToNumber(price: string) {
 }
 
 export default function AllProperties() {
+  const { properties, loading } = useProperties();
+  const [searchParams] = useSearchParams();
   const [query, setQuery] = useState('');
   const [type, setType] = useState<Property['type'] | 'all'>('all');
   const [status, setStatus] = useState<Property['status'] | 'all'>('all');
+  const [location, setLocation] = useState('all');
   const [bedrooms, setBedrooms] = useState<'all' | '0' | '1' | '2' | '3' | '4+'>('all');
   const [minPrice, setMinPrice] = useState<string>('');
   const [maxPrice, setMaxPrice] = useState<string>('');
   const [selected, setSelected] = useState<Property | null>(null);
+
+  // Sync filters with URL params (used by navbar dropdowns)
+  useEffect(() => {
+    const urlType = searchParams.get('type');
+    const urlLocation = searchParams.get('location');
+    setType((urlType as Property['type']) || 'all');
+    setLocation(urlLocation || 'all');
+  }, [searchParams]);
 
   const filteredProperties = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -35,6 +49,8 @@ export default function AllProperties() {
 
       const matchesType = type === 'all' ? true : p.type === type;
       const matchesStatus = status === 'all' ? true : (p.status ?? 'for-sale') === status;
+      const matchesLocation =
+        location === 'all' ? true : p.location.toLowerCase().includes(location.toLowerCase());
 
       const matchesBedrooms = (() => {
         if (bedrooms === 'all') return true;
@@ -46,14 +62,15 @@ export default function AllProperties() {
       const matchesMin = min == null ? true : priceValue >= min;
       const matchesMax = max == null ? true : priceValue <= max;
 
-      return matchesQuery && matchesType && matchesStatus && matchesBedrooms && matchesMin && matchesMax;
+      return matchesQuery && matchesType && matchesStatus && matchesLocation && matchesBedrooms && matchesMin && matchesMax;
     });
-  }, [query, type, status, bedrooms, minPrice, maxPrice]);
+  }, [query, type, status, location, bedrooms, minPrice, maxPrice]);
 
   const clearFilters = () => {
     setQuery('');
     setType('all');
     setStatus('all');
+    setLocation('all');
     setBedrooms('all');
     setMinPrice('');
     setMaxPrice('');
@@ -64,6 +81,12 @@ export default function AllProperties() {
       <div className="container">
         <h2 className="section-title">All Properties</h2>
         <p className="section-subtitle">Search and filter listings with clarity-first controls</p>
+
+        {loading && (
+          <p style={{ textAlign: 'center', color: '#c9a961', padding: '40px 0', letterSpacing: '1px' }}>
+            Loading properties…
+          </p>
+        )}
 
         <div className="properties-toolbar">
           <div className="properties-search">
@@ -85,6 +108,7 @@ export default function AllProperties() {
                 <option value="condo">Condo</option>
                 <option value="apartment">Apartment</option>
                 <option value="commercial">Commercial</option>
+                <option value="townhouse">Townhouse</option>
               </select>
             </div>
 
@@ -94,6 +118,16 @@ export default function AllProperties() {
                 <option value="all">All</option>
                 <option value="for-sale">For Sale</option>
                 <option value="for-rent">For Rent</option>
+              </select>
+            </div>
+
+            <div className="properties-filter">
+              <label>Location</label>
+              <select value={location} onChange={(e) => setLocation(e.target.value)}>
+                <option value="all">All Areas</option>
+                {LOCATIONS.map(loc => (
+                  <option key={loc} value={loc}>{loc}</option>
+                ))}
               </select>
             </div>
 

@@ -1,28 +1,30 @@
-export default function About() {
+﻿export default function About() {
   return (
     <section className="about-section">
       <div className="container">
         <div className="about-grid">
           <div className="about-image">
-            <img src="https://via.placeholder.com/600x800/1a2332/ffffff?text=[Agent+Photo]" alt="Nadia Alfante Cagay - Real Estate Agent" />
+            <img src="https://res.cloudinary.com/dtsoyzdfu/image/upload/q_auto,f_auto,c_limit,w_1200/home/nadia-realestate/nadia-profile" alt="Nadia Alfante Cagay - Real Estate Agent" />
           </div>
           <div className="about-content">
-            <h2 className="section-title">Your Real Estate Specialist</h2>
+            <span className="section-eyebrow">MEET YOUR AGENT</span>
+            <h2 className="section-title">Nadia A. Cagay</h2>
+            <p className="about-credentials">REB &nbsp;&#183;&nbsp; REA &nbsp;&#183;&nbsp; LPT</p>
             <p className="about-text">
-              What makes my work different is simple: I don't sell properties—I guide decisions.
+              I am a licensed real estate broker and appraiser helping buyers and investors make informed, well-timed property decisions in the Philippines.
             </p>
             <p className="about-text">
-              My approach is rooted in clarity, ethics, and long-term thinking. In an industry often driven by urgency and pressure, I take the opposite path. I start by understanding who you are, where you are financially, and what the property is truly meant for—home, investment, or future security. Only then do I recommend options that genuinely fit.
+              <strong>RealEstateMegaphone</strong> exists to amplify what truly matters in real estate facts, proper process, and sound judgment so you do not buy based on pressure, hype, or misinformation.
             </p>
-            <p className="about-text">
-              I specialize in buyer profiling, ensuring that the unit, location, and payment structure align with your lifestyle and risk comfort. This means no forced upgrades, no emotional pushing, and no "buy now, regret later." Every recommendation is grounded in market understanding, legal awareness, and sustainability—both for you as a buyer and for the property's long-term value.
-            </p>
-            <p className="about-text">
-              I am also deeply involved in brokerage training and real estate education, which allows me to explain contracts, titles, and payment terms in a way that is clear and transparent. My clients don't just buy—they understand what they are buying.
-            </p>
-            <p className="about-text">
-              My goal is not a one-time transaction. It is a relationship built on trust, informed choices, and confidence—so that years from now, you can look back and say: that decision still makes sense.
-            </p>
+            <div className="about-what-you-get">
+              <h3>What you'll get here</h3>
+              <ul>
+                <li>&#10004; Clear explanations of titles, laws, and ownership</li>
+                <li>&#10004; Guidance for OFWs and local buyers</li>
+                <li>&#10004; Strategic advice based on timing, not urgency</li>
+                <li>&#10004; Ethical brokerage grounded in licenses and experience</li>
+              </ul>
+            </div>
             <div className="about-stats">
               <div className="stat">
                 <div className="stat-number">4</div>
@@ -33,21 +35,20 @@ export default function About() {
                 <div className="stat-label">Transparency</div>
               </div>
               <div className="stat">
-                <div className="stat-number">∞</div>
+                <div className="stat-number">&#8734;</div>
                 <div className="stat-label">Client Trust</div>
               </div>
             </div>
-
             <div className="about-specialties">
               <h3>My Specialties</h3>
               <ul>
-                <li>🏢 Condominiums</li>
-                <li>🏡 Houses</li>
-                <li>🌳 Vacant Lots</li>
-                <li>💼 Investment Properties</li>
-                <li>🔑 First-Time Buyers</li>
-                <li>📈 Buyer Profiling & Market Analysis</li>
-                <li>📚 Real Estate Education & Training</li>
+                <li>&#127962; Condominiums</li>
+                <li>&#127969; Houses</li>
+                <li>&#127795; Vacant Lots</li>
+                <li>&#128188; Investment Properties</li>
+                <li>&#128273; First-Time Buyers</li>
+                <li>&#128200; Buyer Profiling and Market Analysis</li>
+                <li>&#128218; Real Estate Education and Training</li>
               </ul>
             </div>
           </div>

@@ -22,3 +22,7 @@
 
 /* Responsive Design */
 @import './responsive.css';
+
+/* Admin Pages */
+@import './login.css';
+@import './dashboard.css';

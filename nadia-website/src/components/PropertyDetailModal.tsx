@@ -1,4 +1,4 @@
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Property } from '../types';
@@ -14,6 +14,38 @@ function formatType(type: Property['type']) {
   return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
+/**
+ * Convert any pasted Google Maps URL to a working embed src.
+ * Handles:
+ *  - https://www.google.com/maps/place/...@lat,lng,zoom
+ *  - https://maps.google.com/?q=...
+ *  - https://maps.app.goo.gl/... (short links — browser will follow redirect)
+ *  - Raw "lat,lng" strings
+ * Fallback: search by location name.
+ */
+function toEmbedUrl(mapUrl: string | undefined, fallbackLocation: string): string {
+  if (mapUrl) {
+    // Extract @lat,lng from full place URLs
+    const coord = mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (coord) {
+      return `https://maps.google.com/maps?q=${coord[1]},${coord[2]}&z=16&output=embed`;
+    }
+    // Already an embed URL
+    if (mapUrl.includes('output=embed')) return mapUrl;
+    // Standard Google Maps share URL — just append output=embed
+    if (mapUrl.includes('google.com/maps') || mapUrl.includes('maps.app.goo.gl')) {
+      const sep = mapUrl.includes('?') ? '&' : '?';
+      return `${mapUrl}${sep}output=embed`;
+    }
+    // Raw "lat,lng" pair
+    if (/^-?\d+\.\d+,\s*-?\d+\.\d+$/.test(mapUrl.trim())) {
+      return `https://maps.google.com/maps?q=${encodeURIComponent(mapUrl.trim())}&z=16&output=embed`;
+    }
+  }
+  // Fallback: search by location name
+  return `https://maps.google.com/maps?q=${encodeURIComponent(fallbackLocation)}&output=embed`;
+}
+
 function makeGallery(property: Property) {
   const images = property.images?.length ? property.images : [property.image];
   return images.length >= 3 ? images : [...images, ...images, ...images].slice(0, 3);
@@ -26,10 +58,8 @@ export default function PropertyDetailModal({
   property: Property | null;
   onClose: () => void;
 }) {
-  const prefersReducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const modalRef = useRef<HTMLDivElement | null>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   const gallery = useMemo(() => (property ? makeGallery(property) : []), [property]);
 
@@ -52,13 +82,13 @@ export default function PropertyDetailModal({
 
   useEffect(() => {
     setActiveIndex(0);
-    setTilt({ x: 0, y: 0 });
   }, [property?.id]);
 
   if (!property) return null;
 
   const priceValue = parsePriceToNumber(property.price);
-  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(property.location)}`;
+  const embedUrl = toEmbedUrl(property.mapUrl, property.location);
+  const openUrl  = property.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(property.location)}`;
 
   return (
     <LayoutGroup>
@@ -68,6 +98,7 @@ export default function PropertyDetailModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) onClose();
           }}
@@ -76,10 +107,13 @@ export default function PropertyDetailModal({
             className="property-modal"
             layoutId={`property-card-${property.id}`}
             ref={modalRef}
-            initial={prefersReducedMotion ? false : { scale: 0.98, y: 12 }}
-            animate={prefersReducedMotion ? { opacity: 1 } : { scale: 1, y: 0 }}
-            exit={prefersReducedMotion ? { opacity: 0 } : { scale: 0.98, y: 12, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+            initial={{ opacity: 0.8, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ 
+              duration: 0.2, 
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
           >
             <div className="property-modal-header">
               <div className="property-modal-header-left">
@@ -115,32 +149,15 @@ export default function PropertyDetailModal({
                 <motion.div
                   className="property-hero-image"
                   layoutId={`property-image-${property.id}`}
-                  onMouseMove={(e) => {
-                    if (prefersReducedMotion) return;
-                    const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
-                    const px = (e.clientX - rect.left) / rect.width;
-                    const py = (e.clientY - rect.top) / rect.height;
-                    const x = (px - 0.5) * 10;
-                    const y = (py - 0.5) * -10;
-                    setTilt({ x, y });
-                  }}
-                  onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-                  style={
-                    prefersReducedMotion
-                      ? undefined
-                      : {
-                          transform: `perspective(900px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
-                        }
-                  }
                 >
                   <motion.img
                     key={gallery[activeIndex]}
                     src={gallery[activeIndex]}
                     alt={property.title}
-                    initial={prefersReducedMotion ? false : { opacity: 0, scale: 1.01 }}
-                    animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-                    exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.99 }}
-                    transition={{ duration: 0.25 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
                     draggable={false}
                   />
 
@@ -182,27 +199,15 @@ export default function PropertyDetailModal({
               </div>
 
               <div className="property-sections">
-                <motion.section
-                  className="property-section"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.35 }}
-                >
+                <section className="property-section">
                   <h3>Overview</h3>
                   <p>
                     {property.overview ??
                       'A premium listing curated for clarity-first buyers. Explore the details, compare features, and make your next step with confidence.'}
                   </p>
-                </motion.section>
+                </section>
 
-                <motion.section
-                  className="property-section"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.35, delay: 0.04 }}
-                >
+                <section className="property-section">
                   <h3>Key details</h3>
                   <div className="property-specs">
                     <div className="property-spec">
@@ -224,15 +229,9 @@ export default function PropertyDetailModal({
                       </div>
                     </div>
                   </div>
-                </motion.section>
+                </section>
 
-                <motion.section
-                  className="property-section"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.35, delay: 0.08 }}
-                >
+                <section className="property-section">
                   <h3>Features</h3>
                   <div className="property-pills">
                     {(property.highlights?.length ? property.highlights : ['Quality finishes', 'Smart layout', 'Great access'])
@@ -243,15 +242,9 @@ export default function PropertyDetailModal({
                         </span>
                       ))}
                   </div>
-                </motion.section>
+                </section>
 
-                <motion.section
-                  className="property-section"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.35, delay: 0.12 }}
-                >
+                <section className="property-section">
                   <h3>Amenities</h3>
                   <div className="property-amenities">
                     {(property.amenities?.length ? property.amenities : ['Security', 'Parking', 'Nearby essentials']).map((a) => (
@@ -261,26 +254,29 @@ export default function PropertyDetailModal({
                       </div>
                     ))}
                   </div>
-                </motion.section>
+                </section>
 
-                <motion.section
-                  className="property-section"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.35, delay: 0.16 }}
-                >
-                  <h3>Map</h3>
+                <section className="property-section">
+                  <h3>Location</h3>
                   <div className="property-map">
-                    <div className="property-map-placeholder">
-                      <div className="property-map-title">{property.location}</div>
-                      <div className="property-map-subtitle">Open in Maps for directions and nearby landmarks.</div>
-                      <a className="btn btn-outline" href={mapUrl} target="_blank" rel="noreferrer">
-                        Open in Google Maps
-                      </a>
-                    </div>
+                    <iframe
+                      className="property-map-iframe"
+                      src={embedUrl}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title={`Map — ${property.title}`}
+                    />
+                    <a
+                      className="property-map-open-btn"
+                      href={openUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open in Google Maps ↗
+                    </a>
                   </div>
-                </motion.section>
+                </section>
               </div>
             </div>
           </motion.div>

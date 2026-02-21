@@ -1,12 +1,10 @@
 /* ===== HERO SECTION ===== */
 .hero {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--charcoal) 100%);
-  background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80');
+  background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -14,151 +12,159 @@
 
 .hero-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(26, 35, 50, 0.85) 0%, rgba(45, 55, 72, 0.75) 100%);
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 15, 30, 0.88) 0%, rgba(26, 35, 50, 0.78) 100%);
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  color: var(--white);
   width: 100%;
-  max-width: 1200px;
-  padding: 7.5rem 2rem 3.5rem;
-  animation: fadeInUp 1s ease;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 9rem 2rem 4rem;
+  animation: fadeInUp 0.9s ease;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.hero-title {
-  font-size: 4rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-  color: var(--white);
-  line-height: 1.1;
-  letter-spacing: -1px;
-}
-
-.hero-subtitle {
-  font-size: 1.4rem;
-  margin-bottom: 3rem;
-  color: var(--beige);
-  font-weight: 300;
-  letter-spacing: 0.5px;
-}
-
-.hero-tagline {
-  font-size: 1.4rem;
-  margin-bottom: 1.5rem;
-  color: var(--gold);
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  font-style: italic;
-}
-
-.hero-grid {
+.hero-inner {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  gap: 3rem;
+  gap: 4rem;
   align-items: center;
 }
 
-.hero-left {
+/* Left column */
+.hero-text-col {
   text-align: left;
 }
 
-.hero-kicker {
-  font-size: 1.05rem;
-  color: var(--beige);
-  margin: 0 0 2rem;
-  max-width: 44ch;
-  line-height: 1.6;
-}
-
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.hero-card {
-  background: rgba(26, 35, 50, 0.55);
-  border: 1px solid rgba(201, 169, 97, 0.18);
-  border-radius: 16px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-  text-align: left;
-}
-
-.hero-card-title {
-  margin: 0 0 0.75rem;
-  font-size: 1.15rem;
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: var(--white);
-}
-
-.hero-card-text {
-  margin: 0 0 0.9rem;
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: var(--beige);
-}
-
-.hero-card-text:last-child {
-  margin-bottom: 0;
-}
-
-.hero-card strong {
+  letter-spacing: 3px;
   color: var(--gold);
-  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 0.4rem;
 }
 
-.hero-benefits {
-  background: rgba(45, 55, 72, 0.45);
+.hero-headline {
+  font-size: 3.6rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
 }
 
-.hero-benefits-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.hero-name-accent {
+  color: var(--gold);
 }
 
-.hero-benefits-list li {
-  font-size: 0.98rem;
-  color: var(--beige);
-  margin-bottom: 0.7rem;
-  line-height: 1.5;
+.hero-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.85;
+  max-width: 50ch;
+  margin-bottom: 2.5rem;
 }
 
-.hero-benefits-list li:last-child {
-  margin-bottom: 0;
-}
-
-.hero-disclaimer {
-  font-size: 0.8rem;
-  color: rgba(236, 225, 206, 0.7);
-  margin-top: 1.5rem;
-  line-height: 1.4;
-  max-width: 60ch;
-  font-style: italic;
-}
-
-.hero-buttons {
+.hero-cta-group {
   display: flex;
   gap: 1rem;
-  justify-content: flex-start;
   flex-wrap: wrap;
-  margin-bottom: 0.5rem;
 }
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.hero-btn-messenger {
+  background: #0084FF;
+  color: white;
+}
+.hero-btn-messenger:hover {
+  background: #006acc;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 132, 255, 0.4);
+}
+
+.hero-btn-whatsapp {
+  background: #25D366;
+  color: white;
+}
+.hero-btn-whatsapp:hover {
+  background: #1aad55;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Right column — agent photo */
+.hero-photo-col {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-agent-card {
+  position: relative;
+  max-width: 420px;
+  width: 100%;
+}
+
+.hero-agent-img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  display: block;
+}
+
+.hero-agent-badge {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  background: rgba(10, 15, 30, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(201, 169, 97, 0.35);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hero-agent-badge strong {
+  color: var(--white);
+  font-size: 1.05rem;
+  display: block;
+}
+
+.hero-agent-badge span {
+  color: var(--gold);
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+

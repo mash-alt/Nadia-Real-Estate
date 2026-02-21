@@ -254,6 +254,26 @@
   border: 1px solid rgba(26, 35, 50, 0.08);
 }
 
+.property-map-iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 10px;
+  display: block;
+}
+
+.property-map-open-btn {
+  align-self: flex-start;
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: opacity 0.15s;
+}
+.property-map-open-btn:hover { opacity: 0.6; }
+
 .property-map-title {
   font-weight: 900;
   color: var(--navy);

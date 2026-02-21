@@ -13,7 +13,7 @@ export default function FloatingContact() {
         window.location.href = 'mailto:realtornadiac@gmail.com';
         break;
       case 'messenger':
-        window.open('https://www.facebook.com/messages/t/100073887523966', '_blank');
+        window.open('https://www.messenger.com/t/100073887523966', '_blank');
         break;
       case 'viber':
         window.location.href = 'viber://chat?number=+639224956965';
@@ -76,7 +76,11 @@ export default function FloatingContact() {
         onClick={toggleMenu}
         title="Contact Me"
       >
-        <i className="fas fa-comments"></i>
+        <img
+          src="https://res.cloudinary.com/dtsoyzdfu/image/upload/q_auto,f_auto,c_limit,w_200/home/nadia-realestate/nadia-profile"
+          alt="Nadia"
+          className="main-btn-avatar"
+        />
       </button>
     </div>
   );

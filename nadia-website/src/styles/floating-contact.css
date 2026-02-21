@@ -48,6 +48,18 @@
 
 .contact-btn.main-btn {
   background: linear-gradient(135deg, var(--gold) 0%, #d4a056 100%);
+  overflow: hidden;
+  padding: 0;
+  border: 3px solid var(--gold);
+}
+
+.main-btn-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50%;
+  display: block;
 }
 
 .contact-btn.phone {

@@ -1,24 +1,57 @@
-# Logs
-logs
+# ── Dependencies ──────────────────────────────────────
+node_modules/
+
+# ── Build output ───────────────────────────────────────
+dist/
+dist-ssr/
+
+# ── Environment variables (contain API keys/secrets) ───
+.env
+.env.*
+!.env.example
+
+# ── Source files with hardcoded credentials ────────────
+# These scripts contain Cloudinary API Key + Secret
+scripts/
+
+# Firebase client config (contains API key + project IDs)
+src/config.ts
+
+# ── Firebase local cache / debug logs ──────────────────
+.firebase/
+firebase-debug.log
+firestore-debug.log
+database-debug.log
+ui-debug.log
+
+# ── Large raw image assets (already on Cloudinary) ─────
+public/assets/
+src/assets/BE-Uptown/
+
+# ── TypeScript build cache ─────────────────────────────
+*.tsbuildinfo
+
+# ── Logs ───────────────────────────────────────────────
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# ── OS / Editor junk ───────────────────────────────────
+.DS_Store
+Thumbs.db
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# ── Misc ───────────────────────────────────────────────
+*.local
+coverage/
+.cache/

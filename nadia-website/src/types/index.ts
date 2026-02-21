@@ -1,5 +1,5 @@
 export interface Property {
-  id: number;
+  id: number | string;
   title: string;
   location: string;
   price: string;
@@ -10,11 +10,13 @@ export interface Property {
   type: 'house' | 'condo' | 'apartment' | 'commercial' | 'townhouse';
   status?: 'for-sale' | 'for-rent';
   featured?: boolean;
+  hidden?: boolean;
 
   images?: string[];
   highlights?: string[];
   amenities?: string[];
   overview?: string;
+  mapUrl?: string;
 }
 
 export interface Testimonial {
