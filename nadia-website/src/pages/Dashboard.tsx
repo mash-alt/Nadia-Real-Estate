@@ -3,7 +3,7 @@ import {
   collection, addDoc, updateDoc, deleteDoc,
   doc, onSnapshot, orderBy, query, serverTimestamp,
 } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
+import { signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { db, auth, CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config';
 import type { Property } from '../types';
@@ -49,7 +49,7 @@ export default function Dashboard() {
   const [search,     setSearch]     = useState('');
 
   // view
-  const [view,    setView]    = useState<'list' | 'form'>('list');
+  const [view,    setView]    = useState<'list' | 'form' | 'settings'>('list');
   const [form,    setForm]    = useState<PropForm>({ ...BLANK, highlights: [], amenities: [], images: [] });
 
   // form helpers
@@ -61,6 +61,13 @@ export default function Dashboard() {
   const [uploading,   setUploading]   = useState(0);       // # of images in-flight
   const [confirmDel,  setConfirmDel]  = useState<string | null>(null);
   const [error,       setError]       = useState('');
+
+  // password change
+  const [currentPw,  setCurrentPw]  = useState('');
+  const [newPw,      setNewPw]      = useState('');
+  const [confirmPw,  setConfirmPw]  = useState('');
+  const [pwStatus,   setPwStatus]   = useState<'idle'|'loading'|'success'|'error'>('idle');
+  const [pwError,    setPwError]    = useState('');
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -187,6 +194,34 @@ export default function Dashboard() {
   /* ── logout ── */
   const handleLogout = async () => { await signOut(auth); navigate('/login'); };
 
+  /* ── settings ── */
+  const openSettings = () => {
+    setCurrentPw(''); setNewPw(''); setConfirmPw('');
+    setPwStatus('idle'); setPwError('');
+    setView('settings');
+  };
+
+  const handleChangePassword = async () => {
+    if (!currentPw) { setPwError('Please enter your current password.'); return; }
+    if (newPw.length < 6) { setPwError('New password must be at least 6 characters.'); return; }
+    if (newPw !== confirmPw) { setPwError("New passwords don't match."); return; }
+    setPwStatus('loading'); setPwError('');
+    try {
+      const user = auth.currentUser!;
+      const credential = EmailAuthProvider.credential(user.email!, currentPw);
+      await reauthenticateWithCredential(user, credential);
+      await updatePassword(user, newPw);
+      setPwStatus('success');
+      setCurrentPw(''); setNewPw(''); setConfirmPw('');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to update password.';
+      setPwError(msg.includes('wrong-password') || msg.includes('invalid-credential')
+        ? 'Current password is incorrect.'
+        : msg);
+      setPwStatus('error');
+    }
+  };
+
   /* ── filtered list ── */
   const visible = properties.filter(p =>
     !search ||
@@ -204,6 +239,7 @@ export default function Dashboard() {
       <header className="dash-header">
         <span className="dash-logo">NadiaCagayRealty</span>
         <span className="dash-header-title">Property Dashboard</span>
+        <button className="dash-settings-btn" onClick={openSettings} title="Settings">⚙ Settings</button>
         <button className="dash-logout-btn" onClick={handleLogout}>Logout</button>
       </header>
 
@@ -295,6 +331,73 @@ export default function Dashboard() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </>
+        )}
+
+        {/* ════ SETTINGS VIEW ════ */}
+        {view === 'settings' && (
+          <>
+            <div className="dash-toolbar">
+              <h2 className="dash-section-title">Settings</h2>
+              <button className="dash-back-btn" onClick={() => setView('list')}>← Back to Properties</button>
+            </div>
+
+            <div className="dash-settings-panel">
+              <h3 className="dash-settings-heading">🔒 Change Password</h3>
+
+              {pwStatus === 'success' && (
+                <div className="dash-pw-success">
+                  ✅ Password updated successfully!
+                </div>
+              )}
+              {pwError && (
+                <div className="dash-pw-error">{pwError}</div>
+              )}
+
+              <div className="dash-pw-form">
+                <div className="form-field">
+                  <label className="form-label">Current Password</label>
+                  <input
+                    type="password"
+                    className="form-input"
+                    placeholder="Enter current password"
+                    value={currentPw}
+                    onChange={e => { setCurrentPw(e.target.value); setPwError(''); setPwStatus('idle'); }}
+                    autoComplete="current-password"
+                  />
+                </div>
+                <div className="form-field">
+                  <label className="form-label">New Password</label>
+                  <input
+                    type="password"
+                    className="form-input"
+                    placeholder="At least 6 characters"
+                    value={newPw}
+                    onChange={e => { setNewPw(e.target.value); setPwError(''); setPwStatus('idle'); }}
+                    autoComplete="new-password"
+                  />
+                </div>
+                <div className="form-field">
+                  <label className="form-label">Confirm New Password</label>
+                  <input
+                    type="password"
+                    className="form-input"
+                    placeholder="Repeat new password"
+                    value={confirmPw}
+                    onChange={e => { setConfirmPw(e.target.value); setPwError(''); setPwStatus('idle'); }}
+                    autoComplete="new-password"
+                  />
+                </div>
+
+                <button
+                  className="dash-pw-submit-btn"
+                  onClick={handleChangePassword}
+                  disabled={pwStatus === 'loading'}
+                >
+                  {pwStatus === 'loading' ? 'Updating…' : 'Update Password'}
+                </button>
+              </div>
             </div>
           </>
         )}

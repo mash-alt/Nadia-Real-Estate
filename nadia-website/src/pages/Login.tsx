@@ -16,6 +16,7 @@ export default function Login() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem('loginAt', Date.now().toString());
       navigate('/dashboard');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : '';
