@@ -9,7 +9,7 @@ interface SEOProps {
   keywords?: string;
 }
 
-const BASE_URL  = 'https://nadiacagayrealty.web.app';
+const BASE_URL  = 'https://nadiacagayrealty.com';
 const DEFAULT_IMG = 'https://res.cloudinary.com/dtsoyzdfu/image/upload/q_auto,f_auto,c_fill,w_1200,h_630,g_auto/home/nadia-realestate/nadia-profile';
 
 function setMeta(name: string, content: string, attr: 'name' | 'property' = 'name') {

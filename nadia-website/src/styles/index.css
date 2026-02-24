@@ -12,6 +12,7 @@
 
 /* Sections */
 @import './sections.css';
+@import './services.css';
 
 /* Properties Experience */
 @import './properties.css';

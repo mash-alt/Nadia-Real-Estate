@@ -11,6 +11,7 @@ import Condos from './pages/Condos';
 import AllProperties from './pages/AllProperties';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Services from './pages/Services';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/condos"     element={<Condos />} />
             <Route path="/properties" element={<AllProperties />} />
             <Route path="/about"      element={<About />} />
+            <Route path="/services"   element={<Services />} />
             <Route path="/contact"    element={<Contact />} />
           </Route>
 

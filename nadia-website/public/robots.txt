@@ -5,4 +5,4 @@ Allow: /
 Disallow: /login
 Disallow: /dashboard
 
-Sitemap: https://nadiacagayrealty.web.app/sitemap.xml
+Sitemap: https://nadiacagayrealty.com/sitemap.xml

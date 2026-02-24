@@ -109,6 +109,9 @@ export default function Navbar() {
             <li className={isActive('/about') ? 'active' : ''}>
               <Link to="/about" onClick={close}>About</Link>
             </li>
+            <li className={isActive('/services') ? 'active' : ''}>
+              <Link to="/services" onClick={close}>Services</Link>
+            </li>
             <li className={isActive('/contact') ? 'active' : ''}>
               <Link to="/contact" onClick={close}>Contact</Link>
             </li>
