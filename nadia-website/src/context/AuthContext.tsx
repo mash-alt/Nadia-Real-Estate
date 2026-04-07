@@ -19,20 +19,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   /* ── auth state listener + session age check ── */
   useEffect(() => {
+    console.log('[AuthContext] Setting up auth state listener...');
     const unsub = onAuthStateChanged(auth, async (u) => {
+      console.log('[AuthContext] onAuthStateChanged fired, user:', u?.email || 'null');
       if (u) {
         const loginAt = parseInt(localStorage.getItem('loginAt') || '0', 10);
+        console.log('[AuthContext] User found, loginAt:', loginAt, 'now:', Date.now());
         if (!loginAt || Date.now() - loginAt > SESSION_MS) {
           // session expired or no timestamp — sign out silently
+          console.log('[AuthContext] Session expired or no timestamp, signing out...');
           await signOut(auth);
           localStorage.removeItem('loginAt');
           setUser(null);
           setLoading(false);
           return;
         }
+        console.log('[AuthContext] Session valid, setting user...');
       } else {
+        console.log('[AuthContext] No user, clearing localStorage...');
         localStorage.removeItem('loginAt');
       }
+      console.log('[AuthContext] Updating user state and loading...');
       setUser(u);
       setLoading(false);
     });
@@ -45,8 +52,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const loginAt = parseInt(localStorage.getItem('loginAt') || '0', 10);
     if (!loginAt) return;
     const remaining = SESSION_MS - (Date.now() - loginAt);
-    if (remaining <= 0) { signOut(auth); return; }
+    console.log('[AuthContext] Auto-logout timer set, remaining ms:', remaining);
+    if (remaining <= 0) { 
+      console.log('[AuthContext] Session already expired');
+      signOut(auth); 
+      return; 
+    }
     const timer = setTimeout(async () => {
+      console.log('[AuthContext] Session timeout reached, signing out...');
       await signOut(auth);
       localStorage.removeItem('loginAt');
     }, remaining);

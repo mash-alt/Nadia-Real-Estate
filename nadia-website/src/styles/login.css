@@ -78,16 +78,6 @@
   border-color: #c9a961;
 }
 
-.login-error {
-  background: rgba(248, 81, 73, 0.1);
-  border: 1px solid rgba(248, 81, 73, 0.4);
-  border-radius: 6px;
-  padding: 10px 14px;
-  color: #f85149;
-  font-size: 0.85rem;
-  text-align: left;
-}
-
 .login-btn {
   background: #c9a961;
   color: #0d1117;
