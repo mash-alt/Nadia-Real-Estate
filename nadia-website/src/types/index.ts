@@ -6,6 +6,8 @@ export interface Property {
   size: string;
   beds: number;
   baths: number;
+  unitOffers?: string[];
+  showBedsBaths?: boolean;
   image: string;
   type: 'house' | 'condo' | 'apartment' | 'commercial' | 'townhouse';
   status?: 'for-sale' | 'for-rent';

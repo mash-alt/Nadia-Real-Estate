@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import type { Property } from '../types';
+import { getUnitOffersSummary, shouldShowUnitOffers } from '../utils/propertyDisplay';
 
 function formatType(type: Property['type']) {
   const label = type.replace('-', ' ');
@@ -14,6 +15,9 @@ export default function InteractivePropertyCard({
   property: Property;
   onClick: (property: Property) => void;
 }) {
+  const showUnitOffers = shouldShowUnitOffers(property);
+  const unitOffersSummary = getUnitOffersSummary(property);
+
   return (
     <motion.article
       className="property-card"
@@ -49,8 +53,14 @@ export default function InteractivePropertyCard({
 
         <div className="property-card-highlights">
           <span>📐 {property.size}</span>
-          {property.type !== 'commercial' && <span>🛏️ {property.beds} Beds</span>}
-          <span>🚿 {property.baths} Baths</span>
+          {showUnitOffers ? (
+            <span>🏷️ {unitOffersSummary}</span>
+          ) : (
+            <>
+              {property.type !== 'commercial' && <span>🛏️ {property.beds} Beds</span>}
+              <span>🚿 {property.baths} Baths</span>
+            </>
+          )}
         </div>
 
         {property.highlights?.length ? (

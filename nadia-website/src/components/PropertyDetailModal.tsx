@@ -2,6 +2,7 @@ import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Property } from '../types';
+import { getUnitOffers, shouldShowUnitOffers } from '../utils/propertyDisplay';
 
 function parsePriceToNumber(price: string) {
   const numeric = price.replace(/[^0-9]/g, '');
@@ -89,6 +90,8 @@ export default function PropertyDetailModal({
   const priceValue = parsePriceToNumber(property.price);
   const embedUrl = toEmbedUrl(property.mapUrl, property.location);
   const openUrl  = property.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(property.location)}`;
+  const showUnitOffers = shouldShowUnitOffers(property);
+  const unitOffers = getUnitOffers(property);
 
   return (
     <LayoutGroup>
@@ -214,14 +217,29 @@ export default function PropertyDetailModal({
                       <div className="label">Floor area</div>
                       <div className="value">{property.size}</div>
                     </div>
-                    <div className="property-spec">
-                      <div className="label">Bedrooms</div>
-                      <div className="value">{property.type === 'commercial' ? '—' : property.beds}</div>
-                    </div>
-                    <div className="property-spec">
-                      <div className="label">Bathrooms</div>
-                      <div className="value">{property.baths}</div>
-                    </div>
+                    {showUnitOffers ? (
+                      <>
+                        <div className="property-spec">
+                          <div className="label">Unit Offers</div>
+                          <div className="value">{unitOffers.join(', ')}</div>
+                        </div>
+                        <div className="property-spec">
+                          <div className="label">Property type</div>
+                          <div className="value">{formatType(property.type)}</div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="property-spec">
+                          <div className="label">Bedrooms</div>
+                          <div className="value">{property.type === 'commercial' ? '—' : property.beds}</div>
+                        </div>
+                        <div className="property-spec">
+                          <div className="label">Bathrooms</div>
+                          <div className="value">{property.baths}</div>
+                        </div>
+                      </>
+                    )}
                     <div className="property-spec">
                       <div className="label">Status</div>
                       <div className="value">

@@ -6,6 +6,7 @@ import PropertyDetailModal from '../components/PropertyDetailModal';
 import SEO from '../components/SEO';
 import { useProperties } from '../hooks/useProperties';
 import type { Property } from '../types';
+import { shouldShowUnitOffers } from '../utils/propertyDisplay';
 
 const LOCATIONS = ['Metro Manila', 'Cebu', 'Davao', 'Laguna', 'Cavite', 'Batangas'];
 
@@ -55,6 +56,7 @@ export default function AllProperties() {
 
       const matchesBedrooms = (() => {
         if (bedrooms === 'all') return true;
+        if (shouldShowUnitOffers(p)) return false;
         if (p.type === 'commercial') return bedrooms === '0';
         if (bedrooms === '4+') return p.beds >= 4;
         return p.beds === Number(bedrooms);

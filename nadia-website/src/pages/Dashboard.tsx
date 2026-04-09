@@ -7,13 +7,14 @@ import { signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvide
 import { useNavigate } from 'react-router-dom';
 import { db, auth, CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from '../config';
 import type { Property } from '../types';
+import { getUnitOffers, inferShowBedsBaths } from '../utils/propertyDisplay';
 
 /* ─── Types ─────────────────────────────────────────── */
 type PropForm = Omit<Property, 'id'> & { id?: number | string };
 
 const BLANK: PropForm = {
   title: '', location: '', price: '', size: '',
-  beds: 1, baths: 1, image: '',
+  beds: 1, baths: 1, image: '', unitOffers: [], showBedsBaths: true,
   type: 'condo', status: 'for-sale', featured: false, hidden: false,
   overview: '', highlights: [], amenities: [], images: [], mapUrl: '',
 };
@@ -55,6 +56,7 @@ export default function Dashboard() {
   // form helpers
   const [hlInput,  setHlInput]  = useState('');
   const [amInput,  setAmInput]  = useState('');
+  const [offerInput, setOfferInput] = useState('');
 
   // status
   const [saving,      setSaving]      = useState(false);
@@ -85,13 +87,20 @@ export default function Dashboard() {
 
   const openAdd = () => {
     setForm({ ...BLANK, highlights: [], amenities: [], images: [] });
-    setHlInput(''); setAmInput('');
+    setHlInput(''); setAmInput(''); setOfferInput('');
     setError(''); setView('form');
   };
 
   const openEdit = (p: Property) => {
-    setForm({ ...p, highlights: p.highlights ?? [], amenities: p.amenities ?? [], images: p.images ?? [] });
-    setHlInput(''); setAmInput('');
+    setForm({
+      ...p,
+      highlights: p.highlights ?? [],
+      amenities: p.amenities ?? [],
+      images: p.images ?? [],
+      unitOffers: getUnitOffers(p),
+      showBedsBaths: inferShowBedsBaths(p),
+    });
+    setHlInput(''); setAmInput(''); setOfferInput('');
     setError(''); setView('form');
   };
 
@@ -112,6 +121,8 @@ export default function Dashboard() {
         images: imgs,
         highlights: data.highlights ?? [],
         amenities:  data.amenities  ?? [],
+        unitOffers: getUnitOffers(data),
+        showBedsBaths: data.showBedsBaths ?? true,
       };
       if (id) {
         await updateDoc(doc(db, 'properties', id as string), { ...payload, updatedAt: serverTimestamp() });
@@ -190,6 +201,14 @@ export default function Dashboard() {
   };
   const removeAM = (i: number) =>
     setField('amenities', (form.amenities ?? []).filter((_, idx) => idx !== i));
+
+  const addOffer = () => {
+    const v = offerInput.trim(); if (!v) return;
+    setField('unitOffers', [...getUnitOffers(form), v]);
+    setOfferInput('');
+  };
+  const removeOffer = (i: number) =>
+    setField('unitOffers', getUnitOffers(form).filter((_, idx) => idx !== i));
 
   /* ── logout ── */
   const handleLogout = async () => { await signOut(auth); navigate('/login'); };
@@ -463,15 +482,53 @@ export default function Dashboard() {
                   <input value={form.size} onChange={e => setField('size', e.target.value)} placeholder="e.g. 2,400 sq ft" />
                 </div>
 
-                <div className="form-group">
-                  <label>Bedrooms</label>
-                  <input type="number" min={0} value={form.beds} onChange={e => setField('beds', Number(e.target.value))} />
+                <div className="form-group form-full">
+                  <label>Primary Listing Detail</label>
+                  <select
+                    value={form.showBedsBaths === false ? 'unit-offers' : 'beds-baths'}
+                    onChange={e => setField('showBedsBaths', e.target.value === 'beds-baths')}
+                  >
+                    <option value="beds-baths">Bedrooms and Bathrooms</option>
+                    <option value="unit-offers">Unit Offers</option>
+                  </select>
+                  <span className="form-hint">
+                    Choose what appears on property cards and the detail modal.
+                  </span>
                 </div>
 
-                <div className="form-group">
-                  <label>Bathrooms</label>
-                  <input type="number" min={0} step={0.5} value={form.baths} onChange={e => setField('baths', Number(e.target.value))} />
-                </div>
+                {form.showBedsBaths === false ? (
+                  <div className="form-group form-full">
+                    <label>Unit Offers</label>
+                    <div className="form-tags">
+                      {getUnitOffers(form).map((offer, i) => (
+                        <span key={`${offer}-${i}`} className="form-tag">
+                          {offer}<button type="button" onClick={() => removeOffer(i)}>×</button>
+                        </span>
+                      ))}
+                    </div>
+                    <div className="form-tag-row">
+                      <input
+                        value={offerInput}
+                        onChange={e => setOfferInput(e.target.value)}
+                        onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addOffer(); } }}
+                        placeholder="Add a unit offer and press Enter"
+                      />
+                      <button type="button" className="form-tag-add" onClick={addOffer}>Add</button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="form-group">
+                      <label>Bedrooms</label>
+                      <input type="number" min={0} value={form.beds} onChange={e => setField('beds', Number(e.target.value))} />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Bathrooms</label>
+                      <input type="number" min={0} step={0.5} value={form.baths} onChange={e => setField('baths', Number(e.target.value))} />
+                    </div>
+                  </>
+                )}
 
                 <div className="form-group form-full">
                   <label className="form-check-wrap">

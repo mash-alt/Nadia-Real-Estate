@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import type { Property } from '../types';
+import { getUnitOffersSummary, shouldShowUnitOffers } from '../utils/propertyDisplay';
 
 interface PropertyCardProps {
   property: Property;
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
+  const showUnitOffers = shouldShowUnitOffers(property);
+  const unitOffersSummary = getUnitOffersSummary(property);
+
   return (
     <div className="condo-card">
       <div className="condo-image">
@@ -16,8 +20,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <h3 className="condo-title">{property.title}</h3>
         <p className="condo-location">📍 {property.location}</p>
         <div className="condo-details">
-          <span>🛏️ {property.beds} Beds</span>
-          <span>🚿 {property.baths} Baths</span>
+          {showUnitOffers ? (
+            <span>🏷️ {unitOffersSummary}</span>
+          ) : (
+            <>
+              {property.type !== 'commercial' && <span>🛏️ {property.beds} Beds</span>}
+              <span>🚿 {property.baths} Baths</span>
+            </>
+          )}
           <span>📐 {property.size}</span>
         </div>
         <Link to="/contact" className="btn btn-outline">

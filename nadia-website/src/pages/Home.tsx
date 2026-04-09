@@ -6,6 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import PropertyDetailModal from '../components/PropertyDetailModal';
 import { useProperties } from '../hooks/useProperties';
 import type { Property } from '../types';
+import { getUnitOffersSummary, shouldShowUnitOffers } from '../utils/propertyDisplay';
 
 const LOCATIONS = [
   { name: 'Metro Manila', img: 'https://images.unsplash.com/photo-1555899434-94d1368aa7af?w=600', desc: "Live or invest in the country's business capital, with properties near top schools, malls, and CBDs." },
@@ -92,7 +93,9 @@ export default function Home() {
                   <div className="featured-card-details">
                     <div className="featured-detail-row"><span className="featured-detail-label">Price</span><span className="featured-detail-value">{prop.price}</span></div>
                     <div className="featured-detail-row"><span className="featured-detail-label">Type</span><span className="featured-detail-value">{prop.type.charAt(0).toUpperCase() + prop.type.slice(1)}</span></div>
-                    <div className="featured-detail-row"><span className="featured-detail-label">Beds / Baths</span><span className="featured-detail-value">{prop.beds}BR  {prop.baths}BA</span></div>
+                    {shouldShowUnitOffers(prop)
+                      ? <div className="featured-detail-row"><span className="featured-detail-label">Unit Offers</span><span className="featured-detail-value">{getUnitOffersSummary(prop, 3)}</span></div>
+                      : <div className="featured-detail-row"><span className="featured-detail-label">Beds / Baths</span><span className="featured-detail-value">{prop.beds}BR  {prop.baths}BA</span></div>}
                     <div className="featured-detail-row"><span className="featured-detail-label">Size</span><span className="featured-detail-value">{prop.size}</span></div>
                     <div className="featured-detail-row"><span className="featured-detail-label">Status</span><span className={'featured-status-tag ' + prop.status}>{prop.status === 'for-sale' ? 'For Sale' : 'For Rent'}</span></div>
                   </div>
