@@ -16,6 +16,9 @@ const LOCATION_ITEMS = [
   { label: 'Batangas', to: '/properties?location=Batangas' },
 ];
 
+const BRAND_LOGO_URL =
+  'https://res.cloudinary.com/dtsoyzdfu/image/upload/q_auto,f_auto,c_limit,w_260/v1775831043/home/nadia-realestate/nadia-brand-logo-20260410.png';
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,7 +64,9 @@ export default function Navbar() {
       {/* Main Nav */}
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
-          <Link to="/" className="logo" onClick={close}>NadiaCagayRealty</Link>
+          <Link to="/" className="logo" onClick={close} aria-label="Nadia Cagay Realty Home">
+            <img src={BRAND_LOGO_URL} alt="Nadia Cagay Realty" loading="eager" />
+          </Link>
 
           <button
             className={`hamburger ${menuOpen ? 'open' : ''}`}

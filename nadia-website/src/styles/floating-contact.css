@@ -47,7 +47,7 @@
 }
 
 .contact-btn.main-btn {
-  background: linear-gradient(135deg, var(--gold) 0%, #d4a056 100%);
+  background: transparent;
   overflow: hidden;
   padding: 0;
   border: 3px solid var(--gold);

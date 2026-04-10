@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+const CONTACT_LOGO_URL =
+  'https://res.cloudinary.com/dtsoyzdfu/image/upload/q_auto,f_auto,c_fill,w_120,h_120,g_auto/v1775831043/home/nadia-realestate/nadia-brand-logo-20260410.png';
+
 export default function FloatingContact() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
@@ -77,8 +80,8 @@ export default function FloatingContact() {
         title="Contact Me"
       >
         <img
-          src="https://res.cloudinary.com/dtsoyzdfu/image/upload/q_auto,f_auto,c_limit,w_200/home/nadia-realestate/nadia-profile"
-          alt="Nadia"
+          src={CONTACT_LOGO_URL}
+          alt="Nadia Cagay Realty Logo"
           className="main-btn-avatar"
         />
       </button>
